@@ -1,5 +1,9 @@
+import TerminalScreen from "./components/TerminalScreen"
+
 function App() {
-  return <></> 
+  return (
+    <TerminalScreen/>
+  ) 
 }
 
 export default App
