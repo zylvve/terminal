@@ -3,7 +3,7 @@ import { Entry } from "../ts/types"
 
 const EntryContainer = ({command, output}: Entry) => {
   return (
-    <div>
+    <div className="entry_container">
       <span>{prompt}</span>
       <span>{command}</span>
       <div>{output}</div>

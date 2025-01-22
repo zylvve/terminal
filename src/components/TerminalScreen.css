@@ -13,7 +13,7 @@
   text-shadow: 0 0 10px #C8C8C8;
 }
 
-.output_container {
+.text_container {
   height: 100%;
   overflow-y: auto;
 }
@@ -33,4 +33,16 @@
     transparent 2px
   );
   pointer-events: none;
+}
+
+.input_container input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  box-shadow: none;
+  
+  font-family: inherit;
+  font-size: inherit;
+  text-shadow: inherit;
 }
