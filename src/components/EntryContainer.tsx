@@ -1,11 +1,11 @@
 import { prompt } from "../ts/prompt"
 import { Entry } from "../ts/types"
 
-const EntryContainer = ({command, output}: Entry) => {
+const EntryContainer = ({commandString, output}: Entry) => {
   return (
     <div className="entry_container">
       <span>{prompt}</span>
-      <span>{command}</span>
+      <span>{commandString}</span>
       <div>{output}</div>
     </div>
   )

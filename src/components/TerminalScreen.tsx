@@ -3,16 +3,19 @@ import { FormEventHandler, useRef, useState } from 'react'
 import { Log } from '../ts/types';
 import EntryContainer from './EntryContainer';
 import InputContainer from './InputContainer';
+import { executeCommand, parseCommand } from '../ts/commandHelpers';
+import { welcome } from '../ts/commands';
 
 const TerminalScreen = () => {
   const [log, setLog] = useState<Log>([
-    {command: "command 1", output: "output 1"},
-    {command: "command 2", output: "output 2"},
-    {command: "command 3", output: "output 3"},
-    {command: "command 4", output: "output 4"},
+    {
+      id: 1, 
+      commandString: "welcome", 
+      output: welcome(),
+    }
   ]);
   const [pendingCommand, setPendingCommand] = useState<string>("");
-  
+
   const inputRef = useRef<HTMLInputElement>(null);
   const focusInput = () => {
     if (inputRef.current) inputRef.current.focus();
@@ -21,14 +24,31 @@ const TerminalScreen = () => {
   const submitCommand: FormEventHandler = (event) => {
     event.preventDefault();
     if (pendingCommand === '') return;
+    handleCommand(pendingCommand);
+
     setPendingCommand("");
     inputRef.current!.value = "";
+  }
+  
+  const handleCommand = (pendingCommand: string) => {
+    const parsed = parseCommand(pendingCommand);
+    if (parsed) {
+      addToLog(pendingCommand, executeCommand(parsed));
+    }
+  }
+
+  const addToLog = (commandString: string, output: string) => {
+    setLog([...log, {
+      id: log.length + 1,
+      commandString,
+      output,
+    }])  
   }
   
   return (
     <main className="terminal_screen" onClick={focusInput}>
       <form className="text_container" onSubmit={submitCommand}>
-        {log.map(entry => <EntryContainer {...entry}/>)}
+        {log.map(entry => <EntryContainer {...entry} key={entry.id}/>)}
         <InputContainer 
           setPendingCommand={setPendingCommand}
           ref={inputRef}
